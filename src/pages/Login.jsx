@@ -4,6 +4,7 @@ import { auth, googleProvider } from "../firebase";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { key } from "../helpers/localStorageKey";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -16,9 +17,10 @@ const Login = () => {
     try {
       const res = await signInWithEmailAndPassword(auth, email, password);
       localStorage.setItem(key, res?.user?.email);
+      toast.success("Logged in successfully!");
       navigate("/calculator");
     } catch (error) {
-      console.error(error, "error");
+      toast.error("Invalid email or password!");
     }
   };
 

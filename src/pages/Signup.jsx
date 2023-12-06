@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "../styles/signup.module.css";
 import { auth, createUserWithEmailAndPassword } from "../firebase";
 import { key } from "../helpers/localStorageKey";
+import { toast } from "react-toastify";
 const Signup = () => {
   const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
@@ -21,9 +22,10 @@ const Signup = () => {
         lastName
       );
       localStorage.setItem(key, res?.user?.email);
+      toast.success("Registered Successfully!");
       navigate("/");
     } catch (error) {
-      console.log(error);
+      toast.error("Email already exists!");
     }
   };
 

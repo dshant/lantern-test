@@ -15,6 +15,7 @@ import {
 import { onAuthStateChanged } from "firebase/auth";
 import { key } from "../helpers/localStorageKey";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 const Calculator = () => {
   const navigate = useNavigate();
   const [userEmail, setUserEmail] = useState("");
@@ -29,6 +30,7 @@ const Calculator = () => {
 
   const handleLogout = () => {
     localStorage.removeItem(key);
+    toast.success("Logged out successfully!");
     navigate("/");
   };
 

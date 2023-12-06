@@ -1,26 +1,9 @@
-Overview
-This repository contains a simple React application for a calculator, integrated with Firebase for user authentication and calculation history storage.
+To initiate the project, execute the command npm start.
 
-1.To set up the project, use the following command to create a new React app:
-npx create-react-app my-calculator-app
+Upon execution, the application will navigate to the login page. If you are a registered user, kindly proceed to log in using your email and password. However, if you are a new user, please navigate to the signup page for registration.
 
-2.Firebase Setup
-Create a Firebase project and obtain the Firebase configuration. Update the firebase.js file in the src directory with your Firebase configuration.
+Following successful authentication, access the calculator page, featuring a sophisticated calculation interface equipped with two input fields supporting operators such as addition, subtraction, multiplication, and division. The default currency for calculations is USD, with the option to convert to EURO available by clicking the currency button.
 
-3.Firebase Authentication
-Import the necessary Firebase authentication functions for email/password login, user creation, and Google sign-in. Implement these functions as per your authentication requirements.
+All calculations performed will be meticulously recorded in the calculation history table. Individual entries can be selectively deleted by utilizing the designated delete button.
 
-4.Calculator Logic
-Implement the logic for basic calculator operations (addition, subtraction, multiplication, division) within your React components.
-
-5.Firebase Firestore Database
-Create a Firestore database in Firebase named "history." This is where calculation history entries will be stored.
-
-6.Save Calculation Entries
-Use Firebase Firestore functions to save each calculation entry in the "history" database. Ensure to include the user's ID, calculation details, timestamp, and any additional information needed.
-
-7.Fetch and Display Calculations
-Implement a function to fetch and display all saved calculations from the "history" database. Use the getDocs function to retrieve the data and update your React component state accordingly.
-
-8.Delete Individual Entry
-Implement the functionality to delete an individual entry from the "history" database using the deleteDoc function from Firebase.
+Conveniently located at the top of the calculator page is a logout button. Upon activation, users will be seamlessly logged out and redirected to the login page, ensuring a secure session management process.
