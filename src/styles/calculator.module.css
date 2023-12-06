@@ -1,0 +1,133 @@
+/* Calculator.css */
+
+.calculatorContainer {
+  font-family: "Arial", sans-serif;
+  align-items: center;
+  width: 80%;
+  margin: auto;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.calculatorData {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 30%;
+  padding: 30px;
+  border: 1px solid gray;
+  border-radius: 10px;
+  max-height: 550px;
+}
+
+.calculatorHeading {
+  text-align: center;
+}
+
+.calculatorInput,
+.calculatorResult {
+  margin-bottom: 10px;
+}
+
+.calculatorInput label,
+.calculatorResult label {
+  margin-right: 10px;
+  text-align: left;
+}
+
+.calculatorInput input {
+  padding: 8px;
+  margin-right: 10px;
+}
+
+.calculatorInput select {
+  width: 100%;
+  padding: 10px;
+  margin: 20px 0px 20px 0;
+}
+
+.resultHeading {
+  margin-top: 20px;
+}
+
+.currency-button:hover {
+  background-color: #0056b3;
+}
+
+.calculator-input select {
+  width: 60px;
+}
+.button {
+  width: 100%;
+  height: 35px;
+  background-color: #007bff;
+  border: 1px solid #007bff;
+  color: white;
+  margin-top: 10px;
+}
+
+.calculationHistory {
+  border: 1px solid gray;
+  border-radius: 10px;
+  padding: 20px;
+  max-height: 550px;
+  overflow: scroll;
+  width: 30%;
+}
+
+.items {
+  display: flex;
+  gap: 3px;
+  justify-content: space-between;
+  align-items: center;
+}
+.delete {
+  width: 30%;
+  height: 30px;
+  background-color: red;
+  color: white;
+  border: 1px solid red;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.logout {
+  background-color: red;
+  border-radius: 6px;
+  width: 10%;
+  padding: 10px;
+  color: white;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+  gap: 5px;
+}
+
+.operator {
+  background: orange;
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 5px;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 7px;
+}
