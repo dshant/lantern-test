@@ -1,4 +1,3 @@
-// Calculator.js
 import React, { useEffect, useState } from "react";
 import styles from "../styles/calculator.module.css";
 import { auth, db } from "../firebase";
@@ -16,7 +15,10 @@ import { onAuthStateChanged } from "firebase/auth";
 import { key } from "../helpers/localStorageKey";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
+
+// Calculator Component
 const Calculator = () => {
+  // Initializing state variables
   const navigate = useNavigate();
   const [userEmail, setUserEmail] = useState("");
   const [num1, setNum1] = useState("");
@@ -28,12 +30,14 @@ const Calculator = () => {
   const [calculationHistory, setCalculationHistory] = useState([]);
   const [loadingHistory, setLoadingHistory] = useState(false);
 
+  // Logout function
   const handleLogout = () => {
     localStorage.removeItem(key);
     toast.success("Logged out successfully!");
     navigate("/");
   };
 
+  // Fetching calculation history from Firestore
   const fetchCalculationHistory = async (userId) => {
     try {
       setLoadingHistory(true);
@@ -54,6 +58,7 @@ const Calculator = () => {
     }
   };
 
+  // Storing calculation history in Firestore
   const storeCalculationHistory = async (calculation) => {
     try {
       const userId = auth.currentUser.uid;
@@ -70,6 +75,7 @@ const Calculator = () => {
     }
   };
 
+  // Effect hook to fetch calculation history on authentication state change
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -82,6 +88,7 @@ const Calculator = () => {
     return () => unsubscribe();
   }, []);
 
+  // Function to perform calculations based on operator
   const handleCalculations = (number1, number2) => {
     if (!num1 || !num2) {
       setInputError("Please fill the inputs field to check the result!");
@@ -102,6 +109,7 @@ const Calculator = () => {
     }
   };
 
+  // Function to handle calculation and store in history
   const handleCalculate = () => {
     const number1 = parseFloat(num1);
     const number2 = parseFloat(num2);
@@ -114,10 +122,12 @@ const Calculator = () => {
     setResult(result);
   };
 
+  // Function to handle currency change
   const handleCurrencyChange = () => {
     setCurrency((prevCurrency) => (prevCurrency === "USD" ? "Euro" : "USD"));
   };
 
+  // Function to format currency using Intl.NumberFormat
   const formatCurrency = (value) => {
     const conversionFactor = 0.93;
 
@@ -131,6 +141,7 @@ const Calculator = () => {
     return formattedValue;
   };
 
+  // Effect hook to set user email from local storage
   useEffect(() => {
     if (localStorage.getItem(key)) {
       const userData = localStorage.getItem(key);
@@ -138,6 +149,7 @@ const Calculator = () => {
     }
   }, []);
 
+  // Function to delete calculation history item
   const deleteCalculationHistory = async (id) => {
     try {
       const historyRef = doc(db, "history", id);
@@ -150,6 +162,7 @@ const Calculator = () => {
     }
   };
 
+  // Rendering the Calculator component
   return (
     <div className={styles.calculatorContainer}>
       <div className={styles.header}>
@@ -162,6 +175,7 @@ const Calculator = () => {
         <div className={styles.calculatorData}>
           <h4 className={styles.calculatorHeading}>Calculator</h4>
           <div className={styles.calculatorInput}>
+            {/* Input fields for numbers and operator selection */}
             <label>Number 1:</label>
             <input
               type="number"
@@ -208,16 +222,19 @@ const Calculator = () => {
               </button>
             </div>
 
+            {/* Button to trigger calculation */}
             <button onClick={handleCalculate} className={styles.button}>
               Calculate
             </button>
           </div>
           <div className={styles.calculatorResult}>
+            {/* Dropdown for currency selection */}
             <label>Currency:</label>
             <button className={styles.button} onClick={handleCurrencyChange}>
               {currency}
             </button>
 
+            {/* Displaying calculation result */}
             <div>
               <h4 className={styles.resultHeading}>
                 Result:{" "}
@@ -231,11 +248,13 @@ const Calculator = () => {
           </div>
         </div>
 
+        {/* Displaying calculation history if available */}
         {calculationHistory?.length > 0 && (
           <div className={styles.calculationHistory}>
             <h4>Calculation History</h4>
             {calculationHistory?.map((item, index) => (
               <div className={styles.items} key={index}>
+                {/* Displaying each history item with delete button */}
                 <h5>
                   {item?.calculation} &nbsp;
                   {item.currency}
@@ -255,4 +274,5 @@ const Calculator = () => {
   );
 };
 
+// Exporting the Calculator component
 export default Calculator;

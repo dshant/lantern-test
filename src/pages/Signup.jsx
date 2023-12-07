@@ -4,36 +4,36 @@ import styles from "../styles/signup.module.css";
 import { auth, createUserWithEmailAndPassword } from "../firebase";
 import { key } from "../helpers/localStorageKey";
 import { toast } from "react-toastify";
+
+// Signup Component
 const Signup = () => {
+  // Initializing state variables to capture email and password
   const navigate = useNavigate();
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  // Function to handle user registration with email and password
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      const res = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password,
-        firstName,
-        lastName
-      );
+      // Attempting to create a new user with email and password
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+      // Saving user email in local storage
       localStorage.setItem(key, res?.user?.email);
-      toast.success("Registered Successfully!");
-      navigate("/");
+      toast.success("Registered Successfully!"); // Showing success message
+      navigate("/"); // Redirecting to the home page on successful registration
     } catch (error) {
-      toast.error("Email already exists!");
+      toast.error("Email already exists!"); // Showing error message if email already exists
     }
   };
 
+  // Rendering the Signup component
   return (
     <div className={styles.signupContainer}>
       <form className={styles.signupForm} onSubmit={handleSignup}>
         <h1>Create an Account</h1>
 
+        {/* Input fields for email and password */}
         <label htmlFor="email">Email:</label>
         <input
           type="email"
@@ -54,10 +54,12 @@ const Signup = () => {
           required
         />
 
+        {/* Button to submit the signup form */}
         <button type="submit" className={styles.button}>
           Sign Up
         </button>
 
+        {/* Link to navigate to the signin page */}
         <h5 className={styles.link} onClick={() => navigate("/")}>
           Already have an account? Sign in
         </h5>
@@ -66,4 +68,5 @@ const Signup = () => {
   );
 };
 
+// Exporting the Signup component
 export default Signup;
