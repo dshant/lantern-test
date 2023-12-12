@@ -23,12 +23,10 @@ const Calculator = () => {
   const [userEmail, setUserEmail] = useState("");
   const [num1, setNum1] = useState("");
   const [num2, setNum2] = useState("");
-  const [operator, setOperator] = useState("");
   const [result, setResult] = useState(null);
   const [currency, setCurrency] = useState("USD");
   const [inputError, setInputError] = useState("");
   const [calculationHistory, setCalculationHistory] = useState([]);
-  const [loadingHistory, setLoadingHistory] = useState(false);
 
   // Logout function
   const handleLogout = () => {
@@ -40,7 +38,6 @@ const Calculator = () => {
   // Fetching calculation history from Firestore
   const fetchCalculationHistory = async (userId) => {
     try {
-      setLoadingHistory(true);
       const historyRef = collection(db, "history");
       const historyQuery = query(historyRef, where("userId", "==", userId));
       const querySnapshot = await getDocs(historyQuery);
@@ -54,7 +51,7 @@ const Calculator = () => {
     } catch (error) {
       console.error("Error fetching calculation history:", error.message);
     } finally {
-      setLoadingHistory(false);
+
     }
   };
 
@@ -92,6 +89,7 @@ const Calculator = () => {
   const handleCalculations = (operator) => {
     if (!num1 || !num2) {
       setInputError("Please fill the inputs field to check the result!");
+      return;
     } else {
       setInputError("");
     }
