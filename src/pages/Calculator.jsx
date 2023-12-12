@@ -23,7 +23,7 @@ const Calculator = () => {
   const [userEmail, setUserEmail] = useState("");
   const [num1, setNum1] = useState("");
   const [num2, setNum2] = useState("");
-  const [operator, setOperator] = useState("+");
+  const [operator, setOperator] = useState("");
   const [result, setResult] = useState(null);
   const [currency, setCurrency] = useState("USD");
   const [inputError, setInputError] = useState("");
@@ -89,32 +89,36 @@ const Calculator = () => {
   }, []);
 
   // Function to perform calculations based on operator
-  const handleCalculations = (number1, number2) => {
+  const handleCalculations = (operator) => {
     if (!num1 || !num2) {
       setInputError("Please fill the inputs field to check the result!");
     } else {
       setInputError("");
     }
-    switch (operator) {
-      case "+":
-        return number1 + number2;
-      case "-":
-        return number1 - number2;
-      case "*":
-        return number1 * number2;
-      case "/":
-        return number1 / number2;
-      default:
-        return null;
-    }
-  };
 
-  // Function to handle calculation and store in history
-  const handleCalculate = () => {
     const number1 = parseFloat(num1);
     const number2 = parseFloat(num2);
-    const result = handleCalculations(number1, number2);
-    if (result !== null && auth.currentUser) {
+
+    let result;
+
+    switch (operator) {
+      case "+":
+        result = number1 + number2;
+        break;
+      case "-":
+        result = number1 - number2;
+        break;
+      case "*":
+        result = number1 * number2;
+        break;
+      case "/":
+        result = number1 / number2;
+        break;
+      default:
+        result = "";
+    }
+
+    if (result !== "" && auth.currentUser) {
       const calculationString = `${number1} ${operator} ${number2} = ${result}`;
       storeCalculationHistory(calculationString);
     }
@@ -122,6 +126,7 @@ const Calculator = () => {
     setResult(result);
   };
 
+  // Function to handle calculation and store in history
   // Function to handle currency change
   const handleCurrencyChange = () => {
     setCurrency((prevCurrency) => (prevCurrency === "USD" ? "Euro" : "USD"));
@@ -130,7 +135,6 @@ const Calculator = () => {
   // Function to format currency using Intl.NumberFormat
   const formatCurrency = (value) => {
     const conversionFactor = 0.93;
-
     const formattedValue = new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: currency === "USD" ? "USD" : "EUR",
@@ -194,14 +198,19 @@ const Calculator = () => {
             <div className={styles.buttons}>
               <button
                 className={styles.operator}
-                onClick={() => setOperator("+")}
+                onClick={() => {
+                  handleCalculations("+");
+                }}
               >
                 <span>+</span>
               </button>
 
               <button
                 className={styles.operator}
-                onClick={() => setOperator("-")}
+                onClick={() => {
+                  // setOperator("-");
+                  handleCalculations("-");
+                }}
               >
                 <span> -</span>
               </button>
@@ -209,23 +218,24 @@ const Calculator = () => {
             <div className={styles.buttons}>
               <button
                 className={styles.operator}
-                onClick={() => setOperator("*")}
+                onClick={() => {
+                  // setOperator("*");
+                  handleCalculations("*");
+                }}
               >
                 <span> *</span>
               </button>
 
               <button
                 className={styles.operator}
-                onClick={() => setOperator("/")}
+                onClick={() => {
+                  // setOperator("/");
+                  handleCalculations("/");
+                }}
               >
                 <span> /</span>
               </button>
             </div>
-
-            {/* Button to trigger calculation */}
-            <button onClick={handleCalculate} className={styles.button}>
-              Calculate
-            </button>
           </div>
           <div className={styles.calculatorResult}>
             {/* Dropdown for currency selection */}

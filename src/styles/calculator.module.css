@@ -68,6 +68,7 @@
   border: 1px solid #007bff;
   color: white;
   margin-top: 10px;
+  cursor: pointer;
 }
 
 .calculationHistory {
@@ -130,4 +131,5 @@
   font-size: 20px;
   cursor: pointer;
   padding: 7px;
+  cursor: pointer;
 }

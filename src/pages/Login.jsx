@@ -33,6 +33,10 @@ const Login = () => {
     try {
       // Attempting to sign in with Google using a popup
       const res = await signInWithPopup(auth, googleProvider);
+      console.log(res, "res======");
+      localStorage.setItem(key, res?.user?.email);
+      toast.success("Logged in successfully!");
+      navigate("/calculator");
     } catch (error) {
       console.error("Error logging in with Google:", error.message);
     }
